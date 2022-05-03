@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp
+  name: webappnp
   labels:
-    app: webapp
+    app: webappnp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webapp
+      app: webappnp
   template:
     metadata:
       labels:
-        app: webapp
+        app: webappnp
     spec:
       containers:
       - name: nginx-server
@@ -46,7 +46,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: webapp
+    app: webappnp
   ports:
   - port: 80
     targetPort: 80
