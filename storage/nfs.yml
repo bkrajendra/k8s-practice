@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp
+  name: webnfs
   labels:
-    app: webapp
+    app: webnfs
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webapp
+      app: webnfs
   template:
     metadata:
       labels:
-        app: webapp
+        app: webnfs
     spec:
       containers:
       - name: nginx-server
@@ -33,7 +33,7 @@ spec:
             - >
               while true; do          
               date >> /pod-data/index.html;          
-              echo Hello from the second container 
+              echo "Hello from the second container<br>"
               >> /pod-data/index.html;          sleep 1;       done 
 
       volumes:
@@ -44,15 +44,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-service
+  name: webservice-nfs
 spec:
   type: NodePort
   selector:
-    app: webapp
+    app: webnfs
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30006
+    nodePort: 30010
 
 ---
 apiVersion: v1
@@ -69,3 +69,17 @@ spec:
     path: "/"
   mountOptions:
     - nfsvers=4.2
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Mi
+  volumeName: nfs
