@@ -33,7 +33,7 @@ spec:
             - >
               while true; do          
               date >> /pod-data/index.html;          
-              echo "Hello from the second container<br>"
+              echo "Hello Confluxsys - from the ubuntu container<br>"
               >> /pod-data/index.html;          sleep 1;       done 
 
       volumes:
